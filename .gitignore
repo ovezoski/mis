@@ -70,18 +70,3 @@ pubspec.lock
 # Analysis options (optional)
 analysis_options.yaml
 
-# Testing (uncomment if using a testing framework)
-# test/
-
-# Documentation (uncomment if using a documentation tool)
-# docs/
-
-# Logs (uncomment if managing logs)
-# logs/
-
-# Assets (uncomment if you have a separate assets directory)
-# assets/
-
-# Specific files or directories to exclude (adjust as needed)
-# exclude_file.txt
-# exclude_dir/
