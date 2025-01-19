@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mis_app/screens/favourite_jokes_screen.dart';
 import '../models/joke_type.dart';
 import '../services/api_services.dart';
 import '../widgets/joke_type_card.dart';
@@ -37,6 +38,15 @@ class _JokeTypesScreenState extends State<JokeTypesScreen> {
               );
             },
           ),
+          IconButton(
+              icon: const Icon(Icons.favorite),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return FavouriteJokesScreen();
+                }));
+              }),
+          IconButton(
+              icon: const Icon(Icons.account_balance_sharp), onPressed: () {})
         ],
       ),
       body: FutureBuilder<List<JokeType>>(

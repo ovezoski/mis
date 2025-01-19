@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "750028069680",
+    "project_id": "misapp-4e6ca",
+    "storage_bucket": "misapp-4e6ca.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750028069680:android:04580a327bbafa0ada86f5",
+        "android_client_info": {
+          "package_name": "com.example.mis_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuh_B-c7Nrgb4moS148jpWx0iws_qx8KI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

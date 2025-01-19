@@ -6,7 +6,6 @@ import '../models/joke.dart';
 class ApiServices {
   static const String baseUrl = 'https://official-joke-api.appspot.com';
 
-  // Fetch joke types
   static Future<List<JokeType>> fetchJokeTypes() async {
     final response = await http.get(Uri.parse('$baseUrl/types'));
 
@@ -18,7 +17,6 @@ class ApiServices {
     }
   }
 
-  // Fetch jokes by type
   static Future<List<Joke>> fetchJokesByType(String type) async {
     final response = await http.get(Uri.parse('$baseUrl/jokes/$type/ten'));
 
@@ -30,7 +28,6 @@ class ApiServices {
     }
   }
 
-  // Fetch random joke
   static Future<Joke> fetchRandomJoke() async {
     final response = await http.get(Uri.parse('$baseUrl/random_joke'));
 

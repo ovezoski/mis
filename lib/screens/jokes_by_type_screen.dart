@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/joke.dart';
 import '../services/api_services.dart';
+import '../providers/joke_provider.dart';
 
 class JokesByTypeScreen extends StatefulWidget {
   final String type;
@@ -8,7 +10,7 @@ class JokesByTypeScreen extends StatefulWidget {
   const JokesByTypeScreen({super.key, required this.type});
 
   @override
-  _JokesByTypeScreenState createState() => _JokesByTypeScreenState();
+  State<JokesByTypeScreen> createState() => _JokesByTypeScreenState();
 }
 
 class _JokesByTypeScreenState extends State<JokesByTypeScreen> {
@@ -37,37 +39,57 @@ class _JokesByTypeScreenState extends State<JokesByTypeScreen> {
             return const Center(child: Text('No jokes found'));
           }
 
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              Joke joke = snapshot.data![index];
-              return Card(
-                elevation: 4,
-                margin: const EdgeInsets.all(8),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        joke.setup,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+          final jokeProvider =
+              Provider.of<JokeProvider>(context, listen: false);
+          jokeProvider.setJokes(snapshot.data!);
+
+          return ChangeNotifierProvider.value(
+            value: jokeProvider,
+            child: Consumer<JokeProvider>(
+              builder: (context, jokeProvider, child) {
+                return ListView.builder(
+                  itemCount: jokeProvider.jokes.length,
+                  itemBuilder: (context, index) {
+                    final joke = jokeProvider.jokes[index];
+                    return Card(
+                      elevation: 4,
+                      margin: const EdgeInsets.all(8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(joke.setup,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16)),
+                                  const SizedBox(height: 10),
+                                  Text(joke.punchline,
+                                      style: const TextStyle(
+                                          fontStyle: FontStyle.italic)),
+                                ],
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () => jokeProvider.toggleFavorite(joke),
+                            icon: Icon(
+                                joke.isFavorite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: joke.isFavorite ? Colors.red : null),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        joke.punchline,
-                        style: const TextStyle(
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
+                    );
+                  },
+                );
+              },
+            ),
           );
         },
       ),

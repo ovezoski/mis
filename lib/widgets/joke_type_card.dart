@@ -15,10 +15,7 @@ class JokeTypeCard extends StatelessWidget {
       child: ListTile(
         title: Text(
           jokeType.type.toUpperCase(),
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         trailing: const Icon(Icons.arrow_forward_ios),
         onTap: () {
