@@ -23,22 +23,21 @@ class JokeProvider with ChangeNotifier {
   Future<void> toggleFavorite(Joke joke) async {
     final prefs = await SharedPreferences.getInstance();
 
-    if (_favoriteJokeIds.contains(joke.id.toString())) {
-      _favoriteJokeIds.remove(joke.id.toString());
-      joke.isFavorite = false;
-    } else {
+    if (joke.isFavorite) {
       _favoriteJokeIds.add(joke.id.toString());
-      joke.isFavorite = true;
+    } else {
+      _favoriteJokeIds.remove(joke.id.toString());
     }
+
+    joke.isFavorite = !joke.isFavorite;
 
     _jokes
         .where((j) => j.id == joke.id)
         .forEach((j) => j.isFavorite = joke.isFavorite);
 
     await prefs.setStringList('favoriteJokeIds', _favoriteJokeIds.toList());
-    _favoriteJokes = _jokes
-        .where((j) => _favoriteJokeIds.contains(j.id.toString()))
-        .toList();
+
+    _favoriteJokes = _jokes.where((j) => j.isFavorite).toList();
 
     notifyListeners();
   }
@@ -49,12 +48,6 @@ class JokeProvider with ChangeNotifier {
         isFavorite: _favoriteJokeIds.contains(joke.id.toString()),
       );
     }).toList();
-
-    print(_jokes[0].id);
-    print(_jokes[0].isFavorite);
-
-    print(_jokes[1].id);
-    print(_jokes[1].isFavorite);
 
     notifyListeners();
   }
